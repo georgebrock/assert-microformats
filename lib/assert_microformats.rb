@@ -1,3 +1,4 @@
+require 'test/unit'
 require 'mofo'
 
 module AssertMicroformats
