@@ -33,7 +33,7 @@ module AssertMicroformats
     instances.each do |instance|
       return if properties.inject(true) do |found, pair|
         prop, value = pair
-        found && (instance.instance_eval("#{prop}") == value)
+        found && instance.properties.include?(prop.to_s) && (instance.instance_eval(prop.to_s) == value)
       end
     end
 
