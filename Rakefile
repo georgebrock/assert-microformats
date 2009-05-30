@@ -1,6 +1,17 @@
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
+require 'rubygems'
+require 'echoe'
+
+Echoe.new('assert-microformats', '0.1') do |p|
+  p.description = 'A Rails plugin to help with testing the presence and correctness of microformats markup'
+  p.url = 'http://github.com/georgebrock'
+  p.author = 'George Brocklehurst'
+  p.email = 'george.brocklehurst@gmail.com'
+  p.ignore_pattern = []
+  p.development_dependencies = []
+end
 
 desc 'Default: run unit tests.'
 task :default => :test
