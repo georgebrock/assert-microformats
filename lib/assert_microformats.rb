@@ -20,10 +20,11 @@ module AssertMicroformats
 
     return if properties == nil
 
-    instances.each do |i|
-      found = true
-      properties.each_pair { |prop, value| found &&= (i.instance_eval("#{prop}") == value) }
-      return if found
+    instances.each do |instance|
+      return if properties.inject(true) do |found, pair|
+        prop, value = pair
+        found && (instance.instance_eval("#{prop}") == value)
+      end
     end
 
     assert false, "No #{type} instance was found with #{properties}"
