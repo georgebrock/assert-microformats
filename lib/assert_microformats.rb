@@ -27,7 +27,7 @@ module AssertMicroformats
     end
 
     instances = mf.find :all => {:text => html}
-    assert instances.length > 0
+    raise Test::Unit::AssertionFailedError.new("No instances of #{type} were found") unless instances.length > 0
 
     instances.each do |instance|
       return if properties.inject(true) do |found, pair|
@@ -36,7 +36,7 @@ module AssertMicroformats
       end
     end
 
-    assert false, "No #{type} instance was found with #{properties}"
+    raise Test::Unit::AssertionFailedError.new("Several instances of #{type} were found, but none had the required properties")
 
   end
 
