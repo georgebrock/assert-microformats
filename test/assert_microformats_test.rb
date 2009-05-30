@@ -98,31 +98,46 @@ class AssertMicroformatsTest < Test::Unit::TestCase
     end
   end
 
-  def test_should_only_match_microformats_with_given_properties
+  def test_should_only_match_microformats_which_match_the_given_properties
     assert_microformat hcards[:simple], :hcard, :fn => 'George Brocklehurst'
     assert_microformat hcards[:complex], :hcard, :fn => 'George Brocklehurst', :url => 'http://georgebrock.com', :tel => '(020)12312312'
+    assert_mf_hcard hcards[:simple], :fn => 'George Brocklehurst'
+    assert_mf_hcard hcards[:complex], :fn => 'George Brocklehurst', :url => 'http://georgebrock.com', :tel => '(020)12312312'
+  end
+
+  def test_should_not_match_microformats_which_do_not_match_the_given_properties
     assert_raise(Test::Unit::AssertionFailedError) do
       assert_microformat hcards[:simple], :hcard, :fn => 'Someone Else'
     end
     assert_raise(Test::Unit::AssertionFailedError) do
-      assert_microformat hcards[:simple], :hcard, :fn => 'George Brocklehurst', :url => 'http://www.google.com'
-    end
-    assert_raise(Test::Unit::AssertionFailedError) do
-      assert_microformat hcards[:simple], :hcard, :fn => 'George Brocklehurst', :fakeprop => 'http://www.google.com'
+      assert_mf_hcard hcards[:simple], :fn => 'Someone Else'
     end
   end
 
-  def test_should_only_match_microformats_with_given_properties_using_dynamic_methods
-    assert_mf_hcard hcards[:simple], :fn => 'George Brocklehurst'
-    assert_mf_hcard hcards[:complex], :fn => 'George Brocklehurst', :url => 'http://georgebrock.com', :tel => '(020)12312312'
+  def test_should_not_match_microformats_which_only_match_some_of_the_given_properties
     assert_raise(Test::Unit::AssertionFailedError) do
-      assert_mf_hcard hcards[:simple], :fn => 'Someone Else'
+      assert_microformat hcards[:simple], :hcard, :fn => 'George Brocklehurst', :url => 'http://www.google.com'
     end
     assert_raise(Test::Unit::AssertionFailedError) do
       assert_mf_hcard hcards[:simple], :fn => 'George Brocklehurst', :url => 'http://www.google.com'
     end
+  end
+
+  def test_should_not_match_microformats_that_do_not_have_some_of_the_given_properties
+    assert_raise(Test::Unit::AssertionFailedError) do
+      assert_microformat hcards[:simple], :hcard, :fn => 'George Brocklehurst', :fakeprop => 'http://www.google.com'
+    end
     assert_raise(Test::Unit::AssertionFailedError) do
       assert_mf_hcard hcards[:simple], :fn => 'George Brocklehurst', :fakeprop => 'http://www.google.com'
+    end
+  end
+
+  def test_should_not_match_microformats_that_do_not_have_any_of_the_given_properties
+    assert_raise(Test::Unit::AssertionFailedError) do
+      assert_microformat hcards[:simple], :hcard, :fakeprop => 'http://www.google.com'
+    end
+    assert_raise(Test::Unit::AssertionFailedError) do
+      assert_mf_hcard hcards[:simple], :fakeprop => 'http://www.google.com'
     end
   end
 
