@@ -16,7 +16,20 @@ module AssertMicroformats
     end
 
     instances = mf.find :text => html
-    assert instances.is_a?(mf) || instances.length > 0
+    instances = [instances] if instances.is_a?(mf)
+
+    assert instances.length > 0
+
+    return if options == nil
+
+    instances.each do |i|
+      found = true
+      options.each_pair { |prop, value| found &&= (i.instance_eval("#{prop}") == value) }
+      return if found
+    end
+
+    assert false, "No #{type} instance was found with #{options}"
+
   end
 
 end
