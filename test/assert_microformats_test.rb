@@ -24,4 +24,12 @@ class AssertMicroformatsTest < Test::Unit::TestCase
     end
   end
 
+  def test_should_only_match_microformats_with_given_properties
+    hcard = '<span class="vcard"><span class="fn">George Brocklehurst</span></span>'
+    assert_microformat hcard, :hcard, :fn => 'George Brocklehurst'
+    assert_raise(Test::Unit::AssertionFailedError) do
+      assert_microformat hcard, :hcard, :fn => 'Someone Else'
+    end
+  end
+
 end
