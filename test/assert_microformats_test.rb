@@ -4,6 +4,19 @@ class AssertMicroformatsTest < Test::Unit::TestCase
 
   include AssertMicroformatsTestData
 
+  class MockTestResponse
+    attr_reader :body
+    def initialize(body)
+      @body = body || ''
+    end
+  end
+  def test_mock_test_response
+    string = "A unique string"
+    @response = MockTestResponse.new(string)
+    assert_equal string, @response.body
+    @response = nil
+  end
+
   def test_should_fail_to_find_any_microformats_in_an_empty_string
     assert_raise(Test::Unit::AssertionFailedError) do assert_microformat '', :hcard end
     assert_raise(Test::Unit::AssertionFailedError) do assert_microformat '', :hcalendar end
@@ -68,6 +81,13 @@ class AssertMicroformatsTest < Test::Unit::TestCase
     assert_raise(Test::Unit::AssertionFailedError) do
       assert_microformat hcards[:simple], :hcard, :fn => 'George Brocklehurst', :url => 'http://www.google.com'
     end
+  end
+
+  def test_should_use_test_response_if_no_html_is_provided
+    @response = MockTestResponse.new(hcards[:simple])
+    assert_microformat hcards[:simple], :hcard, :fn => 'George Brocklehurst'
+    assert_microformat @response.body, :hcard, :fn => 'George Brocklehurst'
+    assert_microformat :hcard, :fn => 'George Brocklehurst'
   end
 
 end
