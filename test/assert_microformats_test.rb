@@ -2,6 +2,13 @@ require 'test_helper'
 
 class AssertMicroformatsTest < Test::Unit::TestCase
 
+  def hcards
+    {
+      :simple => '<span class="vcard"><span class="fn">George Brocklehurst</span></span>',
+      :complex => '<div class="vcard"><a class="fn url" href="http://georgebrock.com">George Brocklehurst</a> <span class="tel">(020)12312312</span></div>'
+    }
+  end
+
   def test_should_fail_to_find_an_hcard_in_an_empty_string
     assert_raise(Test::Unit::AssertionFailedError) do
       assert_microformat '', :hcard
@@ -9,12 +16,12 @@ class AssertMicroformatsTest < Test::Unit::TestCase
   end
 
   def test_should_find_a_simple_hcard
-    assert_microformat '<span class="vcard"><span class="fn">George Brocklehurst</span></span>', :hcard
+    assert_microformat hcards[:simple], :hcard
   end
 
   def test_should_not_find_hcalendar_when_only_hcard_is_present
     assert_raise(Test::Unit::AssertionFailedError) do
-      assert_microformat '<span class="vcard"><span class="fn">George Brocklehurst</span></span>', :hcalendar
+      assert_microformat hcards[:simple], :hcalendar
     end
   end
 
