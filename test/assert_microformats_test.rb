@@ -127,4 +127,11 @@ class AssertMicroformatsTest < Test::Unit::TestCase
     assert_mf_hcard :fn => 'George Brocklehurst'
   end
 
+  def test_method_missing_doesnt_capture_methods_not_starting_with_assert_mf
+    assert_equal false, self.respond_to?(:made_up_method)
+    assert_raise(NoMethodError) do
+      self.send :made_up_method
+    end
+  end
+
 end
