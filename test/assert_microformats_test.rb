@@ -124,6 +124,7 @@ class AssertMicroformatsTest < Test::Unit::TestCase
     assert_microformat @response.body, :hcard, :fn => 'George Brocklehurst'
     assert_microformat :hcard, :fn => 'George Brocklehurst'
     assert_mf_hcard @response.body, :fn => 'George Brocklehurst'
+    assert_mf_hcard
     assert_mf_hcard :fn => 'George Brocklehurst'
   end
 
