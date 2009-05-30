@@ -40,4 +40,9 @@ module AssertMicroformats
 
   end
 
+  def method_missing(sym, *args, &block)
+    type = sym.to_s.gsub(/^assert_mf_/, '').intern
+    assert_microformat type, *args.push(type), &block
+  end
+
 end
