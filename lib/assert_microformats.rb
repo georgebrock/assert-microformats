@@ -2,7 +2,7 @@ require 'mofo'
 
 module AssertMicroformats
 
-  def assert_microformat(html, type, options = nil)
+  def assert_microformat(html, type, properties = nil)
     mf = case type
       when :hcard then hCard
       when :hcalendar then hCalendar
@@ -18,15 +18,15 @@ module AssertMicroformats
     instances = mf.find :all => {:text => html}
     assert instances.length > 0
 
-    return if options == nil
+    return if properties == nil
 
     instances.each do |i|
       found = true
-      options.each_pair { |prop, value| found &&= (i.instance_eval("#{prop}") == value) }
+      properties.each_pair { |prop, value| found &&= (i.instance_eval("#{prop}") == value) }
       return if found
     end
 
-    assert false, "No #{type} instance was found with #{options}"
+    assert false, "No #{type} instance was found with #{properties}"
 
   end
 
