@@ -40,9 +40,14 @@ module AssertMicroformats
 
   end
 
+  alias_method :pre_assertmicroformats_method_missing, :method_missing
   def method_missing(sym, *args, &block)
-    type = sym.to_s.gsub(/^assert_mf_/, '').intern
-    assert_microformat type, *args.push(type), &block
+    if sym.to_s =~ /^assert_mf_/
+      type = sym.to_s.gsub(/^assert_mf_/, '').intern
+      assert_microformat type, *args.push(type), &block
+    else
+      pre_assertmicroformats_method_missing sym, *args, &block
+    end
   end
 
 end
