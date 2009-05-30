@@ -51,3 +51,8 @@ module AssertMicroformats
   end
 
 end
+
+
+if RAILS_ENV == 'test'
+  Test::Unit::TestCase.send(:include, AssertMicroformats)
+end

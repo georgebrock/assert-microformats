@@ -1,4 +1,5 @@
 require 'test_helper'
+require File.join(File.dirname(__FILE__), '..', 'lib', 'assert_microformats.rb')
 
 class AssertMicroformatsTest < Test::Unit::TestCase
 
