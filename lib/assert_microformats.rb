@@ -2,7 +2,18 @@ require 'mofo'
 
 module AssertMicroformats
 
-  def assert_microformat(html, type, properties = {})
+  def assert_microformat(*args)
+
+    html = @response.nil? ? '' : @response.body
+    type = nil
+    properties = {}
+
+    args.each_with_index do |arg, index|
+      html = arg if arg.is_a?(String)
+      type = arg if arg.is_a?(Symbol)
+      properties = arg if arg.is_a?(Hash)
+    end
+
     mf = case type
       when :hcard then hCard
       when :hcalendar then hCalendar
