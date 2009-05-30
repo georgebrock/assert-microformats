@@ -1,7 +1,11 @@
 AssertMicroformats
 ==================
 
-Introduction goes here.
+Author: George Brocklehurst
+Web: http://www.georgebrock.com
+
+A Rails plugin to test pages that contain microformats.  Assert that certain
+microformats are present in the page, and that they have certain properties.
 
 
 Example
@@ -10,4 +14,4 @@ Example
 Example goes here.
 
 
-Copyright (c) 2009 [name of plugin creator], released under the MIT license
+Copyright (c) 2009 George Brocklehurst, released under the MIT license
