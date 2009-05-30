@@ -15,9 +15,7 @@ module AssertMicroformats
       else raise ArgumentError.new('Unsupported microformat type')
     end
 
-    instances = mf.find :text => html
-    instances = [instances] if instances.is_a?(mf)
-
+    instances = mf.find :all => {:text => html}
     assert instances.length > 0
 
     return if options == nil
