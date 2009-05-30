@@ -107,6 +107,9 @@ class AssertMicroformatsTest < Test::Unit::TestCase
     assert_raise(Test::Unit::AssertionFailedError) do
       assert_microformat hcards[:simple], :hcard, :fn => 'George Brocklehurst', :url => 'http://www.google.com'
     end
+    assert_raise(Test::Unit::AssertionFailedError) do
+      assert_microformat hcards[:simple], :hcard, :fn => 'George Brocklehurst', :fakeprop => 'http://www.google.com'
+    end
   end
 
   def test_should_only_match_microformats_with_given_properties_using_dynamic_methods
@@ -117,6 +120,9 @@ class AssertMicroformatsTest < Test::Unit::TestCase
     end
     assert_raise(Test::Unit::AssertionFailedError) do
       assert_mf_hcard hcards[:simple], :fn => 'George Brocklehurst', :url => 'http://www.google.com'
+    end
+    assert_raise(Test::Unit::AssertionFailedError) do
+      assert_mf_hcard hcards[:simple], :fn => 'George Brocklehurst', :fakeprop => 'http://www.google.com'
     end
   end
 
