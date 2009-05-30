@@ -2,7 +2,7 @@ require 'mofo'
 
 module AssertMicroformats
 
-  def assert_microformat(html, type, properties = nil)
+  def assert_microformat(html, type, properties = {})
     mf = case type
       when :hcard then hCard
       when :hcalendar then hCalendar
@@ -17,8 +17,6 @@ module AssertMicroformats
 
     instances = mf.find :all => {:text => html}
     assert instances.length > 0
-
-    return if properties == nil
 
     instances.each do |instance|
       return if properties.inject(true) do |found, pair|
