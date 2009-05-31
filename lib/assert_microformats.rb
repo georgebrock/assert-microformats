@@ -1,4 +1,4 @@
-require 'test/unit'
+gem 'mofo'
 require 'mofo'
 
 module AssertMicroformats
@@ -53,7 +53,10 @@ module AssertMicroformats
 
 end
 
-
-if RAILS_ENV == 'test'
-  Test::Unit::TestCase.send(:include, AssertMicroformats)
+module Test
+  module Unit
+    class TestCase
+      include AssertMicroformats
+    end
+  end
 end
