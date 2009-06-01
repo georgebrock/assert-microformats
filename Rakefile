@@ -5,7 +5,7 @@ require 'rubygems'
 
 spec = Gem::Specification.new do |s|
   s.name              = "assert-microformats"
-  s.version           = "0.1.1"
+  s.version           = "0.1.2"
   s.summary           = "A Rails plugin to help with testing the presence and correctness of microformats markup"
   s.author            = "George Brocklehurst"
   s.email             = "george.brocklehurst@gmail.com"
