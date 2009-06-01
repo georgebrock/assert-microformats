@@ -6,7 +6,7 @@ A Rails plugin to test pages that contain microformats.  Assert that certain mic
 ## Setup ##
 
     # In config/environments/test.rb
-    config.gem "georgebrock-assert-microformats", :source => "http://gems.github.com/"
+    config.gem "georgebrock-assert-microformats", :source => "http://gems.github.com/", :lib => false
 
 ## Example ##
 
