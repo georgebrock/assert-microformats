@@ -13,7 +13,7 @@ spec = Gem::Specification.new do |s|
   s.has_rdoc          = true
   s.extra_rdoc_files  = %w(README.markdown)
   s.rdoc_options      = %w(--main README.markdown)
-  s.files             = %w(MIT-LICENSE README.markdown Rakefile) + Dir.glob("{test,lib}/**/*")
+  s.files             = %w(MIT-LICENSE README.markdown Rakefile) + Dir.glob("{test,lib,rails}/**/*")
   s.require_paths     = ["lib"]
   s.add_dependency("mofo", ">= 0.2.0")
 end

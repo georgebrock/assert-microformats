@@ -1,7 +1,7 @@
 RAILS_ENV = 'test'
 require 'rubygems'
 require 'test/unit'
-
+require File.join(File.dirname(__FILE__), "..", "rails", "init")
 module AssertMicroformatsTestData
 
   def hcards

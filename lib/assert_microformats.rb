@@ -16,7 +16,6 @@ module AssertMicroformats
   }
 
   def assert_microformat(*args)
-
     html = @response.nil? ? '' : @response.body
     type = nil
     properties = {}
@@ -44,10 +43,3 @@ module AssertMicroformats
 
 end
 
-module Test
-  module Unit
-    class TestCase
-      include AssertMicroformats
-    end
-  end
-end
