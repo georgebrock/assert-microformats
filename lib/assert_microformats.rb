@@ -3,6 +3,18 @@ require 'mofo'
 
 module AssertMicroformats
 
+  MICROFORMATS = {}
+  ObjectSpace.each_object(Class){|klass|
+    next unless klass < Microformat
+    type = klass.name.downcase.to_sym
+    class_eval %%
+      def assert_mf_#{type} *args, &block
+        assert_microformat #{type.to_sym.inspect}, *args
+      end
+    %
+    MICROFORMATS[type] = klass
+  }
+
   def assert_microformat(*args)
 
     html = @response.nil? ? '' : @response.body
@@ -15,20 +27,10 @@ module AssertMicroformats
       properties = arg if arg.is_a?(Hash)
     end
 
-    mf = case type
-      when :hcard then hCard
-      when :hcalendar then hCalendar
-      when :hreview then hReview
-      when :hentry then hEntry
-      when :hresume then hResume
-      when :xoxo then XOXO
-      when :geo then Geo
-      when :xfn then XFN
-      else raise ArgumentError.new('Unsupported microformat type')
-    end
+    mf = MICROFORMATS[type] or raise ArgumentError.new('Unsupported microformat type')
 
     instances = mf.find :all => {:text => html}
-    raise Test::Unit::AssertionFailedError.new("No instances of #{type} were found") unless instances.length > 0
+    raise Test::Unit::AssertionFailedError.new("No instances of #{type} were found") unless instances.any?
 
     instances.each do |instance|
       return if properties.inject(true) do |found, pair|
@@ -39,16 +41,6 @@ module AssertMicroformats
 
     raise Test::Unit::AssertionFailedError.new("Several instances of #{type} were found, but none had the required properties")
 
-  end
-
-  alias_method :pre_assertmicroformats_method_missing, :method_missing
-  def method_missing(sym, *args, &block)
-    if sym.to_s =~ /^assert_mf_/
-      type = sym.to_s.gsub(/^assert_mf_/, '').intern
-      assert_microformat type, *args.push(type), &block
-    else
-      pre_assertmicroformats_method_missing sym, *args, &block
-    end
   end
 
 end

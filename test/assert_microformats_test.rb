@@ -93,9 +93,6 @@ class AssertMicroformatsTest < Test::Unit::TestCase
     assert_raise(ArgumentError) do
       assert_microformat '', :invalid_microformat_type
     end
-    assert_raise(ArgumentError) do
-      assert_mf_invalid ''
-    end
   end
 
   def test_should_only_match_microformats_which_match_the_given_properties
@@ -148,13 +145,6 @@ class AssertMicroformatsTest < Test::Unit::TestCase
     assert_mf_hcard @response.body, :fn => 'George Brocklehurst'
     assert_mf_hcard
     assert_mf_hcard :fn => 'George Brocklehurst'
-  end
-
-  def test_method_missing_doesnt_capture_methods_not_starting_with_assert_mf
-    assert_equal false, self.respond_to?(:made_up_method)
-    assert_raise(NoMethodError) do
-      self.send :made_up_method
-    end
   end
 
 end
