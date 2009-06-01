@@ -39,8 +39,7 @@ module AssertMicroformats
       end
     end
 
-    raise Test::Unit::AssertionFailedError.new("Several instances of #{type} were found, but none had the required properties")
-
+    raise Test::Unit::AssertionFailedError.new("#{instances.size} instances of #{type} were found, but none had the required properties")
   end
 
 end
